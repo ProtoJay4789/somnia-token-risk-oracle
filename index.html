@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TokenRiskOracle — Agent Arena</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #09090b; color: #e2e8f0; font-family: -apple-system, system-ui, sans-serif; min-height: 100vh; }
+    .container { max-width: 900px; margin: 0 auto; padding: 60px 24px; }
+    h1 { font-size: 3rem; font-weight: 800; margin-bottom: 8px; }
+    h1 span { color: #dc2626; }
+    .tagline { font-size: 1.25rem; color: #94a3b8; margin-bottom: 48px; }
+    .card { background: #0f172a; border: 1px solid #374151; border-radius: 16px; padding: 32px; margin-bottom: 24px; }
+    .card h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 16px; color: #fff; }
+    .card p { color: #94a3b8; line-height: 1.7; font-size: 1rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+    .stat { background: #0f172a; border: 1px solid #374151; border-radius: 12px; padding: 24px; text-align: center; }
+    .stat .num { font-size: 2rem; font-weight: 800; color: #dc2626; }
+    .stat .label { font-size: 0.875rem; color: #94a3b8; margin-top: 4px; }
+    .flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 24px 0; }
+    .flow-step { background: #0f172a; border: 2px solid #dc2626; border-radius: 12px; padding: 16px 20px; text-align: center; min-width: 140px; }
+    .flow-step .icon { font-size: 2rem; }
+    .flow-step .text { font-size: 0.875rem; color: #fff; margin-top: 8px; font-weight: 600; }
+    .arrow { color: #dc2626; font-size: 1.5rem; }
+    .btn { display: inline-block; background: #dc2626; color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: background 0.2s; }
+    .btn:hover { background: #b91c1c; }
+    .btn-outline { background: transparent; border: 2px solid #dc2626; }
+    .btn-outline:hover { background: #dc262622; }
+    .status { display: inline-block; padding: 4px 12px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+    .status-live { background: #22c55e22; color: #22c55e; border: 1px solid #22c55e44; }
+    .status-dev { background: #eab30822; color: #eab308; border: 1px solid #eab30844; }
+    .footer { text-align: center; margin-top: 48px; color: #64748b; font-size: 0.875rem; }
+    .footer a { color: #dc2626; text-decoration: none; }
+    .brand { display: flex; align-items: center; gap: 8px; margin-bottom: 48px; }
+    .brand-dot { width: 12px; height: 12px; background: #dc2626; border-radius: 50%; }
+    .brand-text { font-size: 0.875rem; color: #94a3b8; font-weight: 600; letter-spacing: 0.05em; }
+    .risk-demo { margin: 24px 0; }
+    .risk-bar { height: 8px; background: #374151; border-radius: 4px; overflow: hidden; margin-top: 8px; }
+    .risk-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+    .risk-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: #94a3b8; margin-top: 4px; }
+    @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } .flow { flex-direction: column; } .arrow { transform: rotate(90deg); } h1 { font-size: 2rem; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brand">
+      <div class="brand-dot"></div>
+      <div class="brand-text">AGENT ARENA</div>
+    </div>
+
+    <h1>Token<span>Risk</span>Oracle</h1>
+    <p class="tagline">On-chain risk scoring for AI agents — the agent-native token sniffer.</p>
+
+    <div class="grid">
+      <div class="stat">
+        <div class="num">0–100</div>
+        <div class="label">Risk Score Range</div>
+      </div>
+      <div class="stat">
+        <div class="num">2</div>
+        <div class="label">AI Agents in Pipeline</div>
+      </div>
+      <div class="stat">
+        <div class="num">5</div>
+        <div class="label">Risk Classifications</div>
+      </div>
+      <div class="stat">
+        <div class="num">∞</div>
+        <div class="label">Chains Supported</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔄 How It Works</h2>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="icon">📍</div>
+          <div class="text">Token Address</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="flow-step">
+          <div class="icon">🌐</div>
+          <div class="text">GoPlus API<br>Fetch</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="flow-step">
+          <div class="icon">🧠</div>
+          <div class="text">LLM Agent<br>Classifies</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="flow-step">
+          <div class="icon">📊</div>
+          <div class="text">Risk Score<br>0–100</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="flow-step">
+          <div class="icon">🤖</div>
+          <div class="text">Agent Makes<br>Decision</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📊 Live Risk Demo</h2>
+      <p>Enter a token address to see how the oracle evaluates risk:</p>
+      <div style="display: flex; gap: 12px; margin-top: 16px;">
+        <input type="text" id="tokenInput" placeholder="0x... token address" style="flex: 1; background: #1e293b; border: 1px solid #374151; border-radius: 8px; padding: 12px 16px; color: #e2e8f0; font-size: 1rem; font-family: monospace;">
+        <button class="btn" onclick="simulateRisk()">Analyze</button>
+      </div>
+      <div id="riskResult" style="display: none; margin-top: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 0.875rem; color: #94a3b8;">Risk Score</div>
+            <div id="riskScore" style="font-size: 3rem; font-weight: 900; font-family: monospace;"></div>
+          </div>
+          <div id="riskLevel" style="font-size: 1.5rem; font-weight: 700;"></div>
+        </div>
+        <div class="risk-demo">
+          <div class="risk-bar"><div id="riskBar" class="risk-fill" style="width: 0%"></div></div>
+          <div class="risk-labels"><span>Safe</span><span>Low Risk</span><span>Moderate</span><span>High Risk</span><span>Scam</span></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
+          <div style="background: #1e293b; padding: 12px; border-radius: 8px;"><span style="color: #94a3b8; font-size: 0.75rem;">Honeypot</span><br><span id="isHoneypot" style="font-weight: 600;"></span></div>
+          <div style="background: #1e293b; padding: 12px; border-radius: 8px;"><span style="color: #94a3b8; font-size: 0.75rem;">Buy Tax</span><br><span id="buyTax" style="font-weight: 600;"></span></div>
+          <div style="background: #1e293b; padding: 12px; border-radius: 8px;"><span style="color: #94a3b8; font-size: 0.75rem;">Sell Tax</span><br><span id="sellTax" style="font-weight: 600;"></span></div>
+          <div style="background: #1e293b; padding: 12px; border-radius: 8px;"><span style="color: #94a3b8; font-size: 0.75rem;">Whale Hold</span><br><span id="whaleHold" style="font-weight: 600;"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🛡️ What It Checks</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div><strong style="color: #dc2626;">Honeypot Detection</strong><br><span style="color: #94a3b8; font-size: 0.875rem;">Can you actually sell this token?</span></div>
+        <div><strong style="color: #dc2626;">Tax Analysis</strong><br><span style="color: #94a3b8; font-size: 0.875rem;">Buy/sell fees in basis points</span></div>
+        <div><strong style="color: #dc2626;">Whale Concentration</strong><br><span style="color: #94a3b8; font-size: 0.875rem;">Top 10 holder supply %</span></div>
+        <div><strong style="color: #dc2626;">Contract Verification</strong><br><span style="color: #94a3b8; font-size: 0.875rem;">Is the source code public?</span></div>
+        <div><strong style="color: #dc2626;">Mint Authority</strong><br><span style="color: #94a3b8; font-size: 0.875rem;">Can the owner print tokens?</span></div>
+        <div><strong style="color: #dc2626;">LP Lock Status</strong><br><span style="color: #94a3b8; font-size: 0.875rem;">Is liquidity locked?</span></div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 16px; justify-content: center; margin: 48px 0;">
+      <a href="https://somnia.w3us.site/address/0x1171538eD34A0a3d82E23bCD2F1CcC438177Fb42" class="btn" target="_blank">View Contract ↗</a>
+      <a href="https://github.com/ProtoJay4789/somnia-agentic-examples" class="btn btn-outline" target="_blank">GitHub ↗</a>
+    </div>
+
+    <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 32px;">
+      <span class="status status-live">Deployed on Somnia Testnet</span>
+      <span class="status status-dev">E2E Pending</span>
+    </div>
+
+    <div class="footer">
+      Built for <a href="#">Somnia Agentathon 2026</a> by <a href="https://github.com/ProtoJay4789">Agent Arena</a>
+    </div>
+  </div>
+
+  <script>
+    function simulateRisk() {
+      const addr = document.getElementById('tokenInput').value;
+      if (!addr || !addr.startsWith('0x')) { alert('Enter a valid 0x... address'); return; }
+      
+      // Simulate risk score based on address hash
+      let hash = 0;
+      for (let i = 0; i < addr.length; i++) { hash = ((hash << 5) - hash) + addr.charCodeAt(i); hash |= 0; }
+      const score = Math.abs(hash % 101);
+      
+      const isHoneypot = score > 70;
+      const buyTax = Math.min(score * 3, 1500);
+      const sellTax = Math.min(score * 5, 3000);
+      const whaleHold = Math.min(30 + score, 99);
+      
+      let level, color;
+      if (score < 20) { level = 'Safe'; color = '#22c55e'; }
+      else if (score < 40) { level = 'Low Risk'; color = '#84cc16'; }
+      else if (score < 60) { level = 'Moderate Risk'; color = '#eab308'; }
+      else if (score < 80) { level = 'High Risk'; color = '#f97316'; }
+      else { level = 'Scam'; color = '#dc2626'; }
+      
+      document.getElementById('riskResult').style.display = 'block';
+      document.getElementById('riskScore').textContent = score;
+      document.getElementById('riskScore').style.color = color;
+      document.getElementById('riskLevel').textContent = level;
+      document.getElementById('riskLevel').style.color = color;
+      document.getElementById('riskBar').style.width = score + '%';
+      document.getElementById('riskBar').style.background = color;
+      document.getElementById('isHoneypot').textContent = isHoneypot ? '⚠️ Yes' : '✅ No';
+      document.getElementById('isHoneypot').style.color = isHoneypot ? '#dc2626' : '#22c55e';
+      document.getElementById('buyTax').textContent = (buyTax / 100).toFixed(1) + '%';
+      document.getElementById('buyTax').style.color = buyTax > 500 ? '#dc2626' : '#22c55e';
+      document.getElementById('sellTax').textContent = (sellTax / 100).toFixed(1) + '%';
+      document.getElementById('sellTax').style.color = sellTax > 500 ? '#dc2626' : '#22c55e';
+      document.getElementById('whaleHold').textContent = whaleHold + '%';
+      document.getElementById('whaleHold').style.color = whaleHold > 60 ? '#dc2626' : '#22c55e';
+    }
+  </script>
+</body>
+</html>
