@@ -108,6 +108,12 @@
         <input type="text" id="tokenInput" placeholder="0x... token address" style="flex: 1; background: #1e293b; border: 1px solid #374151; border-radius: 8px; padding: 12px 16px; color: #e2e8f0; font-size: 1rem; font-family: monospace;">
         <button class="btn" onclick="simulateRisk()">Analyze</button>
       </div>
+      <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
+        <button onclick="loadPreset('0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984','UNI (Safe)')" style="background: #1e293b; border: 1px solid #374151; border-radius: 6px; padding: 6px 12px; color: #22c55e; font-size: 0.75rem; cursor: pointer;">UNI (Safe)</button>
+        <button onclick="loadPreset('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48','USDC (Safe)')" style="background: #1e293b; border: 1px solid #374151; border-radius: 6px; padding: 6px 12px; color: #22c55e; font-size: 0.75rem; cursor: pointer;">USDC (Safe)</button>
+        <button onclick="loadPreset('0x6982508145454Ce325dDbE47a25d4ec3d2311933','PEPE (Moderate)')" style="background: #1e293b; border: 1px solid #374151; border-radius: 6px; padding: 6px 12px; color: #eab308; font-size: 0.75rem; cursor: pointer;">PEPE (Moderate)</button>
+        <button onclick="loadPreset('0x000000000000000000000000000000000000dead','Dead Address (Scam)')" style="background: #1e293b; border: 1px solid #374151; border-radius: 6px; padding: 6px 12px; color: #dc2626; font-size: 0.75rem; cursor: pointer;">Dead Address (Scam)</button>
+      </div>
       <div id="riskResult" style="display: none; margin-top: 24px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <div>
@@ -143,7 +149,7 @@
 
     <div style="display: flex; gap: 16px; justify-content: center; margin: 48px 0;">
       <a href="https://somnia.w3us.site/address/0x1171538eD34A0a3d82E23bCD2F1CcC438177Fb42" class="btn" target="_blank">View Contract ↗</a>
-      <a href="https://github.com/ProtoJay4789/somnia-agentic-examples" class="btn btn-outline" target="_blank">GitHub ↗</a>
+      <a href="https://github.com/ProtoJay4789/somnia-token-risk-oracle" class="btn btn-outline" target="_blank">GitHub ↗</a>
     </div>
 
     <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 32px;">
@@ -157,6 +163,11 @@
   </div>
 
   <script>
+    function loadPreset(addr, name) {
+      document.getElementById('tokenInput').value = addr;
+      simulateRisk();
+    }
+
     function simulateRisk() {
       const addr = document.getElementById('tokenInput').value;
       if (!addr || !addr.startsWith('0x')) { alert('Enter a valid 0x... address'); return; }
